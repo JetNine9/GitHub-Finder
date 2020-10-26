@@ -1,25 +1,20 @@
-import React, { Component, Fragment} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import Spinner from '../layouts/Spinner'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 import Repos from '../repo/Repos'
 
-class User extends Component {
-    componentDidMount() {
-        this.props.getUser(this.props.match.params.login)
-        this.props.getRepo(this.props.match.params.login)
-    }
+const User = (props) => {
 
-    static propTypes = {
-        loading: PropTypes.bool,
-        user: PropTypes.object.isRequired,
-        getUser: PropTypes.func.isRequired,
-        repos: PropTypes.array.isRequired,
-    }
+    // by placing an empty array it means that code runs when it is mounted.
+    useEffect(() => {
+        props.getUser(props.match.params.login)
+        props.getRepo(props.match.params.login)
+        //eslint-disable-next-line
+    },[])
 
-    render() {
 
-        const {
+         const {
             name,
             avatar_url,
             location,
@@ -33,12 +28,11 @@ class User extends Component {
             company,
             public_repos
 
+        } = props.user
 
-        } = this.props.user
 
-        const { loading } = this.props
 
-        if (loading) {
+        if (props.loading) {
             return <Spinner />
         } else {
             return (
@@ -87,14 +81,21 @@ class User extends Component {
                             <div className="badge badge-dark">Repository: {public_repos}</div>
 
                         </div>
-                        <Repos repos={this.props.repos}/>
+                        <Repos repos={props.repos}/>
                 </Fragment>
             )
         }
 
 
 
-    }
+
+}
+
+User.propTypes = {
+    loading: PropTypes.bool,
+    user: PropTypes.object.isRequired,
+    getUser: PropTypes.func.isRequired,
+    repos: PropTypes.array.isRequired,
 }
 
 export default User
