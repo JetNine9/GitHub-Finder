@@ -1,19 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 const UserItem = (props) => {
 
-    let { login, html_url, avatar_url, } = props.user
+    let { login, avatar_url } = props.user
 
     return (
         <div className="card text-center">
             <img src={avatar_url} alt="" className="round-img" style={{ width: '60px' }} ></img>
             <h3>{login}</h3>
 
-            <div>
-                <a href={html_url} className='btn btn-dark btn-sm my-1' >More</a>
-            </div>
+            <Link to={`/user/${login}`} className='btn btn-dark btn-sm my-1' > more </Link>
+
+
 
         </div>
     )
