@@ -2,16 +2,19 @@ import React, { Component, Fragment} from 'react'
 import Spinner from '../layouts/Spinner'
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
+import Repos from '../repo/Repos'
 
 class User extends Component {
     componentDidMount() {
         this.props.getUser(this.props.match.params.login)
+        this.props.getRepo(this.props.match.params.login)
     }
 
     static propTypes = {
         loading: PropTypes.bool,
         user: PropTypes.object.isRequired,
         getUser: PropTypes.func.isRequired,
+        repos: PropTypes.array.isRequired,
     }
 
     render() {
@@ -84,6 +87,7 @@ class User extends Component {
                             <div className="badge badge-dark">Repository: {public_repos}</div>
 
                         </div>
+                        <Repos repos={this.props.repos}/>
                 </Fragment>
             )
         }
