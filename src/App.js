@@ -14,6 +14,18 @@ import axios from 'axios'
 
 const App = () =>  {
 
+
+  let githubClientId;
+  let githubClientSecret;
+
+  if (process.env.NODE_ENV !== 'production') {
+    githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID
+    githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET
+  } else {
+    githubClientId = process.env.GITHUB_CLIENT_ID
+    githubClientSecret = process.env.GITHUB_CLIENT_SECRET
+  }
+
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false);
@@ -27,8 +39,8 @@ const App = () =>  {
     setLoading( true )
 
     let res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id$
-    {process.env.REACT_APP_GITHUB_CLIENT_ID}=$
-    {process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+    {githubClientId}=$
+    {githubClientSecret}`)
 
 
     setUsers(res.data.items)
@@ -61,8 +73,8 @@ const App = () =>  {
     setLoading(true);
 
     let res = await axios.get(`https://api.github.com/users/${username}?client_id=$
-    {process.env.REACT_APP_GITHUB_CLIENT_ID}=$
-    {process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+    {githubClientId}=$
+    {githubClientSecret}`)
 
 
 
@@ -78,8 +90,8 @@ const App = () =>  {
     setLoading(true);
 
     let res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=$
-    {process.env.REACT_APP_GITHUB_CLIENT_ID}=$
-    {process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+    {githubClientId}=$
+    {githubClientSecret}`)
 
 
 
@@ -93,6 +105,7 @@ const App = () =>  {
 
 
     return (
+
       <Router>
         <div className="App">
           <Navbar title=" Github Finder" />
@@ -133,6 +146,7 @@ const App = () =>  {
 
         </div>
       </Router>
+
     );
 
 

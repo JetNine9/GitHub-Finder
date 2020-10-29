@@ -1,5 +1,1 @@
-import { createContext } from 'react';
-
-const githubContext = createContext();
-
-export default githubContext;
+// Function that we will perform on our state to get a new state.
